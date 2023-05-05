@@ -3,6 +3,10 @@ import { useState } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { QRCode, Popover } from 'antd';
+import  { DownloadOutlined } from '@ant-design/icons';
+// import DownloadOutlined from 'antd';
+
+
 
 
 const Machines = () => {
@@ -24,7 +28,9 @@ const Machines = () => {
 
   function downloadQRCode() {
 		const canvas = document.getElementById('qrcode')?.querySelector('canvas');
+    console.log(canvas)
 		if (canvas) {
+      console.log(1)
 			const url = canvas.toDataURL();
 			const a = document.createElement('a');
 			a.download = 'QRCode.png';
@@ -137,12 +143,25 @@ const Machines = () => {
       key: 'qrcode',
       backgroundColor: "green",
       fixed: 'right',
-      render: () => 
-      //  <Popover id={"qrcode"} overlayInnerStyle={{ padding: 0 }} content={<QRCode value={"name"} bordered={false}/>}>
+     
+      render: (text, record, index) => < div className = "btn-wrap"
+      style = {
+        {
+          width: "200px"
+        }
+      } > 
       
-      <Button variant="contained" color="success"> QR Code </Button>
-      
-      // {/* </Popover>, */}
+      <div id={"qrcode"}>
+      <QRCode value={record.name} bordered={false}/>
+			</div>
+      < Button icon={<DownloadOutlined />} onClick = {  
+          (e) => {  
+            downloadQRCode()
+          }
+
+      } > Download  </Button>
+
+      </div >
      
     },
 
