@@ -179,7 +179,7 @@ export default function AddMachine() {
 								})
 						
 							}}
-							{...(errors.state && {error:true, helperText:errors.state})}
+			
 						/>
 						<TextField
 							required
@@ -197,7 +197,7 @@ export default function AddMachine() {
 								})
 					
 							}}
-							{...(errors.state && {error:true, helperText:errors.state})}
+					
 						/>
 						<TextField
 							required
@@ -219,7 +219,7 @@ export default function AddMachine() {
 								})
 							
 							}}
-							{...(errors.state && {error:true, helperText:errors.state})}
+							
 						/>
 						<Divider />
 				</Grid>
@@ -227,8 +227,6 @@ export default function AddMachine() {
 				})
 			}
 			  
-		
-
             </Grid>
 			<center>             
 			<Button
