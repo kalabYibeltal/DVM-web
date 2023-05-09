@@ -1,15 +1,19 @@
-import { Button, Space, Table } from 'antd';
+import { Space, Table } from 'antd';
+import {Button} from 'antd';
 import { useState } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { QRCode, Popover } from 'antd';
-import  { DownloadOutlined } from '@ant-design/icons';
+import  { DownloadOutlined, RiseOutlined  } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+// import Button from '@mui/material/Button';
 // import DownloadOutlined from 'antd';
 
 
 
 
 const Machines = () => {
+  const navigate = useNavigate()
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const [data, setdata] = useState([])
@@ -41,6 +45,9 @@ const Machines = () => {
 		}
 	}
 
+  function redirect (name){
+    navigate(`/home/machine/${name}`);
+  }
 
   const handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
@@ -65,16 +72,6 @@ const Machines = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      // filters: [
-      //   {
-      //     text: 'Joe',
-      //     value: 'Joe',
-      //   },
-      //   {
-      //     text: 'Jim',
-      //     value: 'Jim',
-      //   },
-      // ],
       filteredValue: filteredInfo.name || null,
       onFilter: (value, record) => record.name.includes(value),
       sorter: (a, b) => a.name.length - b.name.length,
@@ -125,8 +122,8 @@ const Machines = () => {
       title: 'Income',
       dataIndex: 'income',
       key: 'income',
-      sorter: (a, b) => a.age - b.age,
-      sortOrder: sortedInfo.columnKey === 'age' ? sortedInfo.order : null,
+      sorter: (a, b) => a.income - b.income,
+      sortOrder: sortedInfo.columnKey === 'income' ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -154,7 +151,8 @@ const Machines = () => {
       <div id={"qrcode"}>
       <QRCode value={record.name} bordered={false}/>
 			</div>
-      < Button icon={<DownloadOutlined />} onClick = {  
+      < Button style={{ color:'green'}} icon={<DownloadOutlined />} onClick = {  
+
           (e) => {  
             downloadQRCode()
           }
@@ -165,6 +163,29 @@ const Machines = () => {
      
     },
 
+    {
+      title: 'Details',
+      dataIndex: 'details',
+      key: 'details',
+      backgroundColor: "green",
+      fixed: 'right',
+     
+      render: (text, record, index) => < div className = "btn-wrap"
+      style = {
+        {
+          width: "200px"
+        }
+      } > 
+      
+      < Button style={{ color:'red'}}  onClick = {  
+          (e) => {  
+            redirect(record.name)
+          }
+      } > Get details <RiseOutlined /></Button>
+
+      </div >
+     
+    },
 
   ];
   return (

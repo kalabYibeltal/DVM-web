@@ -16,7 +16,7 @@ const getFreshModel = () => ({
 	name: "",
 	numberofitems: "",
     building: "",
-	items: "",
+	items: [],
     city: "",
 })
 
@@ -63,6 +63,15 @@ export default function AddMachine() {
 	}
 
   };
+
+  function addItem() {
+	setValues({
+		...values,
+		numberofitems: values.numberofitems + 1,
+		items: values.items + [{"name": "", "price": "", "stock": ""}]
+		
+	})
+  }
 
   const validate = () => {
 	  let temp = {};
@@ -145,7 +154,7 @@ export default function AddMachine() {
 							setValues({
 								...values,
 								numberofitems: e.target.value,
-								items: Array(Number(e.target.value)).fill({...sample})
+								items: Array(Number(e.target.value)).fill().map(u => ({"name": "", "price": "", "stock": ""}))
 							})
 						}}
 						{...(errors.numberofitems && {error:true, helperText:errors.numberofitems})}
@@ -153,13 +162,14 @@ export default function AddMachine() {
               </Grid>
               <Divider/>
 		
-		 
+						
 
 		  	{Number(values.numberofitems) > 0 && Array(Number(values.numberofitems)).fill("_")
 				.map((item, index) => {
 					console.log(index);
-					values.items[index].name = "kalab";
+					// values.items[index].name = "kalab";
 					console.log(values.items);
+
 					return (
 					<Grid item xs={12} sm={6} sx ={{mx:36}} key={index}>
 						<h1 sx={{ textalign: 'center', mx: 15}} > Item {index + 1}</h1>
@@ -177,7 +187,7 @@ export default function AddMachine() {
 									...values,
 									items: tmp
 								})
-						
+								
 							}}
 			
 						/>
@@ -228,15 +238,23 @@ export default function AddMachine() {
 			}
 			  
             </Grid>
-			<center>             
+			
+			<center> 
+			{/* < Button variant="outlined" sx={{  my: 3, color:'grey'}}   
+			onClick = {(e) => {  
+				addItem()
+				}
+			} > Add Item </Button> */}
+
 			<Button
               type="submit"
               variant="contained"
 			  color={"primary"}
-              sx={{ mt: 3, mb: 2 , backgroundColor:"green"}}
+              sx={{ mx:5,  backgroundColor:"green"}}
             >
               submit
             </Button>
+			
 			</center>
 
           </Box>
