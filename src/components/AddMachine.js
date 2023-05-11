@@ -50,7 +50,7 @@ export default function AddMachine() {
 			
 		};
 		console.log(values, values.items)
-		axios.post('https://dvm.onrender.com/vmachine/createmachine_post', values)
+		axios.post('https://dvm-dq1y.onrender.com/vmachine/createmachine_post', values)
                 .then(result => {
 					setStatus("Vending machine added")
 					setStatusColor('green')

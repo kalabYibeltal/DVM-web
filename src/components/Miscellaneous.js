@@ -14,7 +14,7 @@ export default function Miscellaneous() {
 	
 
 	React.useEffect(() => {
-		axios.get('https://dvm.onrender.com/admin/userdata')
+		axios.get('https://dvm-dq1y.onrender.com/admin/userdata')
                 .then(result => {
 					setcustomers(result.data.customers)
 					setcustomersbalance(result.data.customersbalance)
@@ -24,7 +24,7 @@ export default function Miscellaneous() {
                   }
                 
                 )
-		axios.get('https://dvm.onrender.com/admin/machinedata')
+		axios.get('https://dvm-dq1y.onrender.com/admin/machinedata')
 		.then(result => {
 			setmachines(result.data.machines)
 			setincome(result.data.income)

@@ -19,7 +19,7 @@ const Machines = () => {
   const [data, setdata] = useState([])
 
   React.useEffect(() => {
-    axios.get('https://dvm.onrender.com/vmachine/getall').then(res => {
+    axios.get('https://dvm-dq1y.onrender.com/vmachine/getall').then(res => {
         console.log(res.data.machines)
         setdata(res.data.machines)
 

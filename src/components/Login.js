@@ -62,7 +62,7 @@ export default function Login() {
     const login = e => {
         e.preventDefault()
         if (validate())
-            axios.post('https://dvm.onrender.com/admin/adminlogin', values)
+            axios.post('https://dvm-dq1y.onrender.com/admin/adminlogin', values)
                 .then(result => {
                     return result.data;
                 })

@@ -24,16 +24,12 @@ export default function EditItem() {
 
     function handler() {
         console.log('sadf');
-        // axios.post('https://dvm.onrender.com/vmachine/edititem', {message:data})
-        // .then(result => {
-        //     setStatus("Vending machine added")
-        //     setStatusColor('green')
-        //     return result.data;
-        // }).catch((err) => {
-        //     setStatus("Error, try again")
-        //     setStatusColor('red')
-        //     console.log(err);
-        // })
+        axios.post('https://dvm-dq1y.onrender.com/vmachine/edititem', {message:data})
+        .then(result => {
+            return result.data;
+        }).catch((err) => {
+            console.log(err);
+        })
 
         navigate(`/home/machine/${name}`)
     }
