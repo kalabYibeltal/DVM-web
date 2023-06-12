@@ -13,21 +13,29 @@ import { redirect, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Container } from '@mui/material';
 import Button from '@mui/material/Button';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Homeback from '../Background/landingback';
 
 
 
 
 const Machine = () => {
   const navigate = useNavigate();
-  const { name } = useParams();
+  const { res1,res2 } = useParams();
   const [data, setdata] = useState([]);
+  
+  console.log(res1);
+  const res = res1.split(",");
+  const name = res[0].trim();
+  const building = res[1].trim();
+  
+  console.log(name);
+  console.log(building);
 
   React.useEffect(() => {
     axios.get('https://dvm-dq1y.onrender.com/vmachine/getall' )
     .then(res => {
 
-
-    
         res.data.machines.map((item)=> {
             if (item.name == name) {
                setdata(item.items)
@@ -42,7 +50,22 @@ const Machine = () => {
   }, [])
 
   function redirect (name){
-    navigate(`/home/edititem/${name}`);
+    navigate(`/appbar/home/edititem/${name}`);
+  }
+
+  function redirect2 (building){
+
+    axios.post('https://dvm-dq1y.onrender.com/build/getlocation', {"name": building} ).then(res => {
+            // const center = {lat: res.data.lat.toString(), lng:)
+            navigate(`/appbar/home/location/${res.data.lat.toString()}, ${res.data.lng.toString()}`);
+
+        }).catch(err => {
+            console.log(err)
+        })
+
+
+
+    
   }
 
   return (
@@ -73,13 +96,19 @@ const Machine = () => {
         </TableBody>
       </Table>
     </TableContainer>
-      < Button variant="contained" style={{ backgroundColor:'red'}}  sx={{mx: 65}} onClick = {  
+      < Button variant="contained" style={{ backgroundColor:'red'}}  sx={{mx: 55}} onClick = {  
         (e) => {  
           redirect(name)
         }
     } > Edit </Button>
+
+     < Button variant="contained" style={{ backgroundColor:'Green'}}  sx={{mx: -53}} onClick = {  
+        (e) => {  
+          redirect2(building)
+        }
+    } > <LocationOnIcon /> Get location </Button>
     </Container>
-    
+        
 
   );
 };

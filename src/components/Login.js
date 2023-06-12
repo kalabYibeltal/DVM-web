@@ -16,9 +16,9 @@ import {
 import useForm from '../hooks/useForm';
 import useStateContext from '../hooks/useStateContext';
 import { useNavigate } from "react-router-dom";
-
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Loginback from '../Background/Loginback';
 
 
 axios.defaults.withCredentials = true;
@@ -34,11 +34,10 @@ const getFreshModel = () => ({
 
 export default function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
-    const { setToken } = useStateContext();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const { user, setUser, resetUser } = useStateContext();
+    const { user, setUser, resetUser, setToken, resetToken } = useStateContext();
     const navigate = useNavigate();
 
     const handleMouseDownPassword = (event) => {
@@ -56,6 +55,7 @@ export default function Login() {
 
     useEffect(() => {
         resetUser();
+        resetToken();
     }, [])
 
 
@@ -64,12 +64,12 @@ export default function Login() {
         if (validate())
             axios.post('https://dvm-dq1y.onrender.com/admin/adminlogin', values)
                 .then(result => {
-                    return result.data;
+                    return result.data; 
                 })
                 .then(res => {
                     setToken(res.token)
-                    setUser(res.user)
-                    navigate("/home")
+                    setUser(res.admin)
+                    navigate("/appbar/home")
                 })
                 .catch(function (err) {
 
@@ -94,6 +94,7 @@ export default function Login() {
 
     return (
         <Card sx={{width: 400, mx:70, my:28}}>
+             <Loginback />
             <CardContent>
                 <Typography variant="h5"
                         sx ={{my: 3, mx:6}}>

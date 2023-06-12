@@ -13,7 +13,7 @@ export default function Appbar() {
           <CssBaseline />
           <AppBar position='fixed'
                   sx={{ zIndex: (theme) => theme.zIndex.drawer + 3,
-                    backgroundColor: '#505153'  }}
+                    backgroundColor: '#ADD8E6'  }}
           >
              
               <Toolbar sx={{m: "auto", width: "100%" }}>
@@ -25,6 +25,7 @@ export default function Appbar() {
                         flexGrow: 0,
                         m: 2,
                         mx: 56,
+                        color: "black",
                     }}
                   >
                       Digital Vending Machine Admin Page
@@ -34,6 +35,7 @@ export default function Appbar() {
               </Toolbar>
             
           </AppBar>
+          
           <Outlet />
       </Box>
    

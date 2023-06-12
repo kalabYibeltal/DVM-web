@@ -54,6 +54,7 @@ export default function AddMachine() {
                 .then(result => {
 					setStatus("Vending machine added")
 					setStatusColor('green')
+					navigate("/appbar/home/machines")
                     return result.data;
                 }).catch((err) => {
 					setStatus("Error, try again")
@@ -179,6 +180,7 @@ export default function AddMachine() {
 							id={"name" + index}
 							label="item name"
 							name={"name" + index}
+							sx={{my: 1}}
 							value={values.items[index].name}
 							onChange={(e) => {
 								let tmp = values.items
@@ -198,6 +200,7 @@ export default function AddMachine() {
 							label="item price"
 							name= {"price" + index}
 							value={values.items[index].price}
+							sx={{my: 1}}
 							onChange={(e) => {
 								let tmp = values.items
 								tmp[index].price = e.target.value
@@ -216,6 +219,7 @@ export default function AddMachine() {
 							label="item amount"
 							name={"stock" + index} 
 							value={values.items[index].stock}
+							sx={{my: 1}}
 							onChange={(e) => {
 								let tmp = [...values.items]
 								console.log(index)

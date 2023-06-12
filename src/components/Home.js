@@ -6,13 +6,14 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Outlet} from "react-router";
 import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Homeback from '../Background/landingback';
 
 
 
 function Home() {
     const navigate = useNavigate();
     const logout = () => {
-        navigate("/login");
+        navigate("/appbar/login");
       }
     const location = useLocation()
     const drawerWidth = 240
@@ -27,25 +28,37 @@ function Home() {
             path: "addmachine"
         },
         {
-            text: "miscellaneous",
+            text: "Stats",
             path: "miscellaneous"
         },
-
+        {
+            text: "Feedback",
+            path: "feedback"
+        },
     ]
 
 
     return (
         <>
+           {/* <Home back /> */}
             <Drawer
+                PaperProps={{
+                    sx: {
+                    backgroundColor: "#D3D3D3",
+                    color: "black",
+                    fontWeight: 'bold'
+                    }
+                }}    
                 variant="permanent"
                 sx={{
                   width: drawerWidth,
                   flexShrink: 0,
                   [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                  
                 }}
               >
                 <Toolbar />
-                <Box sx={{ overflow: 'auto' }}>
+                <Box sx={{ overflow: 'auto'}} >
                   <List>
                     {NavBarItems.map((item, index) => (
                         <ListItem
@@ -58,8 +71,8 @@ function Home() {
                             >
                                 <ListItemIcon>
                                     {item.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={item.text} />
+                                </ListItemIcon >
+                               <ListItemText primary={item.text} /> 
                             </ListItemButton>
                         </ListItem>
                     ))}

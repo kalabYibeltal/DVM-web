@@ -4,7 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import { Row } from 'antd';
-
+import {  Col } from 'antd';
+import Graph from './Graph.js';
 
 export default function Miscellaneous() {
 	const [customers, setcustomers] = React.useState(0)
@@ -39,6 +40,7 @@ export default function Miscellaneous() {
 	
 
 	return (
+		<Col>
 		<Row>
 		<Card sx={{ maxWidth: 345, mx:7, my:9, backgroundColor:'rgb(234, 234, 234)'}}>
 		<CardContent>
@@ -48,7 +50,7 @@ export default function Miscellaneous() {
 		</CardContent>
 		<CardContent>
 		  <Typography gutterBottom variant="h5" component="div"  color={"green"}>
-			Total customers savings : {customersbalance}
+			Total customers savings : {customersbalance} br
 		  </Typography>
 		</CardContent>
 	  </Card>
@@ -61,11 +63,15 @@ export default function Miscellaneous() {
 		</CardContent>
 		<CardContent>
 		  <Typography gutterBottom variant="h5" component="div" color={"blue"}>
-			Total income generated : {income}
+			Total income generated : {income} br
 		  </Typography>
 		</CardContent>
 	  </Card>
 
 	</Row>
+	<Row>
+		<Graph />
+	</Row>
+	</Col>
   )
 }

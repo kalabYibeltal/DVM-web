@@ -65,7 +65,7 @@ export function ContextProvider({children}) {
     }, [token]);
 
     return (
-        <stateContext.Provider value={{ user, setUser, token, setToken }}>
+        <stateContext.Provider value={{ user, setUser, token , setToken }}>
             {children}
         </stateContext.Provider>
   )

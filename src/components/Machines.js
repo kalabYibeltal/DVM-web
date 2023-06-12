@@ -6,11 +6,8 @@ import React from 'react';
 import { QRCode, Popover } from 'antd';
 import  { DownloadOutlined, RiseOutlined  } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-// import Button from '@mui/material/Button';
-// import DownloadOutlined from 'antd';
-
-
-
+import Homeback from '../Background/landingback';
+import Papa from 'papaparse';
 
 const Machines = () => {
   const navigate = useNavigate()
@@ -19,8 +16,10 @@ const Machines = () => {
   const [data, setdata] = useState([])
 
   React.useEffect(() => {
+
     axios.get('https://dvm-dq1y.onrender.com/vmachine/getall').then(res => {
-        console.log(res.data.machines)
+
+        // console.log(res.data.machines)
         setdata(res.data.machines)
 
     }).catch(err => {
@@ -28,6 +27,47 @@ const Machines = () => {
     })
 
   }, [])
+
+function downloadCsv(){
+    console.log(data)
+
+    const formattedData = data.map(machine => ({
+      Name: machine.name,
+      NumberOfItems: machine.numberofitems,
+      Building: machine.building,
+      City: machine.city,
+      Income: machine.income,
+    }));
+
+    // Convert the formatted data to CSV
+    const csv = Papa.unparse(formattedData);
+
+    // Save as CSV file
+    const csvBlob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const csvLink = document.createElement('a');
+    if (csvLink.download !== undefined) {
+      const csvUrl = URL.createObjectURL(csvBlob);
+      csvLink.setAttribute('href', csvUrl);
+      csvLink.setAttribute('download', 'data.csv');
+      csvLink.style.visibility = 'hidden';
+      document.body.appendChild(csvLink);
+      csvLink.click();
+      document.body.removeChild(csvLink);
+    }
+}
+
+
+
+
+
+  const getRowClassName = (record, index) => {
+    let count = true // no empty item
+    Object.keys(record.items).map((key) => {
+      count = count && record.items[key].stock != 0 // already efficient
+    })
+    
+    return count ? '' : 'highlight-row';
+  };
 
 
   function downloadQRCode() {
@@ -45,10 +85,10 @@ const Machines = () => {
 		}
 	}
 
-  function redirect (name){
-    navigate(`/home/machine/${name}`);
+  function redirect (res1,res2){
+    navigate(`/appbar/home/machine/${res1},${res2}`);
   }
-
+ 
   const handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
     setFilteredInfo(filters);
@@ -88,8 +128,8 @@ const Machines = () => {
           value: 'addis ababa',
         },
         {
-          text: 'Tokyo',
-          value: 'tokyo',
+          text: 'helsinki',
+          value: 'helsinki',
         },
       ],
       filteredValue: filteredInfo.city || null,
@@ -110,6 +150,7 @@ const Machines = () => {
         {
           text: 'Zefmesh',
           value: 'zefmesh',
+
         },
       ],
       filteredValue: filteredInfo.building || null,
@@ -117,6 +158,7 @@ const Machines = () => {
       sorter: (a, b) => a.building.length - b.building.length,
       sortOrder: sortedInfo.columnKey === 'building' ? sortedInfo.order : null,
       ellipsis: true,
+      
     },
     {
       title: 'Income',
@@ -141,7 +183,7 @@ const Machines = () => {
       backgroundColor: "green",
       fixed: 'right',
      
-      render: (text, record, index) => < div className = "btn-wrap"
+      render: (text, record, index) => < div className = "btn-wrap "
       style = {
         {
           width: "200px"
@@ -149,6 +191,7 @@ const Machines = () => {
       } > 
       
       <div id={"qrcode"}>
+        
       <QRCode value={record.name} bordered={false}/>
 			</div>
       < Button style={{ color:'green'}} icon={<DownloadOutlined />} onClick = {  
@@ -170,26 +213,17 @@ const Machines = () => {
       backgroundColor: "green",
       fixed: 'right',
      
-      render: (text, record, index) => < div className = "btn-wrap"
-      style = {
-        {
-          width: "200px"
-        }
-      } > 
-      
-      < Button style={{ color:'red'}}  onClick = {  
-          (e) => {  
-            redirect(record.name)
-          }
-      } > Get details <RiseOutlined /></Button>
-
-      </div >
+      render: (text, record, index) =>
+       < Button style={{ color:'red'}}  onClick = { (e) => {  
+            redirect(record.name,record.building)
+          } } > Get details <RiseOutlined /></Button>
      
     },
 
   ];
   return (
     <>
+      <Homeback />  
       <Space
         style={{
           marginBottom: 16,
@@ -198,8 +232,9 @@ const Machines = () => {
         <Button onClick={setIncomeSort}>Sort Income</Button>
         <Button onClick={clearFilters}>Clear filters</Button>
         <Button onClick={clearAll}>Clear filters and sorters</Button>
+        <Button style={{color:"blue", backgroundColor:"#90EE90"}} onClick={downloadCsv}> Download Csv <DownloadOutlined /></Button>
       </Space>
-      <Table columns={columns} dataSource={data} onChange={handleChange} />
+      <Table  columns={columns} dataSource={data} onChange={handleChange} rowClassName={getRowClassName}/>
     </>
   );
 };
