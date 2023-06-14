@@ -63,8 +63,9 @@ function Home() {
                     {NavBarItems.map((item, index) => (
                         <ListItem
                             key={item.text}
-                            selected={location.pathname === `/home/${item.path}`}
+                            selected={location.pathname === `/appbar/home/${item.path}`}
                             disablePadding
+                            
                         >
                             <ListItemButton
                                 onClick={() => navigate(item.path)}

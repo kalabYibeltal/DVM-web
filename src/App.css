@@ -422,3 +422,7 @@ nav {
   color: rgb(215, 89, 89);
   font-weight: 600
 }
+
+.Mui-selected{
+  background-color: #ADD8E6!important;
+}
